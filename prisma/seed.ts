@@ -1,16 +1,23 @@
 import { PrismaClient } from '@prisma/client';
 import { Random } from 'mockjs';
-const Prism = new PrismaClient();
+const prisma = new PrismaClient();
 
-async function main() {
-  for (let i = 0; i < 20; i++) {
-    await Prism.user.create({
+async function run() {
+  for (let i = 0; i < 30; i++) {
+    await prisma.user.create({
       data: {
         name: Random.cname(),
-        password: Random.string(8),
+        password: Random.string(),
+        apps: {
+          create: {
+            title: Random.csentence(),
+            content: Random.cparagraph(),
+            preview: Random.image('300x300'),
+          },
+        },
       },
     });
   }
 }
 
-main();
+run();
