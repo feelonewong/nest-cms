@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Random } from 'mockjs';
+import { formateUser } from './user';
 const prisma = new PrismaClient();
-
 async function run() {
   for (let i = 0; i < 30; i++) {
     await prisma.user.create({
@@ -18,6 +18,7 @@ async function run() {
       },
     });
   }
+  formateUser();
 }
 
 run();

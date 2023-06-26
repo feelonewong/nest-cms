@@ -16,6 +16,7 @@ model User {
   password String
   email    String?
   mobile   String?
+  secret   String?
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
   apps      App[]
@@ -26,6 +27,7 @@ model App {
   title    String
   content  String   @db.Text
   preview  String
+  is_free  Boolean  @default(true)
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
