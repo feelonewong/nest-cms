@@ -1,6 +1,8 @@
-export default () => {
+import { registerAs } from '@nestjs/config';
+
+export default registerAs('app', () => {
   return {
     name: 'feelonewong',
-    address: 'China',
+    city: 'Shanghai',
   };
-};
+});

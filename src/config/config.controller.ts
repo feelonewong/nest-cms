@@ -1,20 +1,17 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Controller, Get, Inject } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import config from '../config';
 
 @Controller('config')
 export class ConfigController {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    @Inject(config.KEY)
+    private readonly confrguration: ConfigType<typeof config>,
+  ) {}
 
   @Get()
   getHello() {
-    return this.configService.get('name');
+    return this.confrguration.name + this.confrguration.city;
+    // return this.configService.get('name');
   }
 }
