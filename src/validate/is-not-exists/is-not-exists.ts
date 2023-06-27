@@ -7,6 +7,7 @@ import {
 
 export function IsNotExists(
   table: string,
+  fields: string[],
   validationOptions?: ValidationOptions,
 ) {
   return function (object: Record<string, any>, propertyName: string) {
@@ -19,19 +20,15 @@ export function IsNotExists(
       validator: {
         async validate(value: string, args: ValidationArguments) {
           const prisma = new PrismaClient();
-          const res = await prisma.user.findFirst({
+          let data = [];
+          data = fields.map((fields) => {
+            return {
+              [fields]: value,
+            };
+          });
+          const res = await prisma[table].findFirst({
             where: {
-              OR: [
-                {
-                  name: value,
-                },
-                {
-                  email: value,
-                },
-                {
-                  mobile: value,
-                },
-              ],
+              OR: data,
             },
           });
           return !Boolean(res);
